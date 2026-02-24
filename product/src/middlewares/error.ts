@@ -1,6 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { Request, Response, NextFunction } from "express";
 import { CustomErrorHandler } from "../errors";
+import mongoose from "../config/mongoose";
 
 export const errorMiddleware = (
     err: any,
@@ -14,6 +15,14 @@ export const errorMiddleware = (
             statusCode: StatusCodes.UNPROCESSABLE_ENTITY,
             success: false,
             message: err.details[0].message,
+        });
+    }
+
+    if (err instanceof mongoose.Error.CastError) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            statusCode: StatusCodes.BAD_REQUEST,
+            success: false,
+            message: `Invalid ${err.path}: ${err.value}`,
         });
     }
 

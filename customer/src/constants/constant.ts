@@ -33,3 +33,7 @@ export const NAME_REQUIRED = "Name is required";
 export const EMAIL_REQUIRED = "Email address is required";
 export const VALID_EMAIL = "Valid email required";
 export const EMAIL_EXIST = "Email exist";
+export const CUSTOMER_NOT_FOUND = "Customer not found";
+export const AGGREGATE_ERROR = "AggregateError";
+export const ECONNREFUSED =
+    "One or more services are down, please try again later";

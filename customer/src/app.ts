@@ -9,6 +9,8 @@ import path from "path";
 import swaggerUi from "swagger-ui-express";
 import { corsOptions } from "./constants/constant";
 import cors from "cors";
+import customer from "./router/customer";
+import product from "./router/product";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -36,6 +38,9 @@ app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(docs));
 app.get("/api/v1/docs-json", (req, res) => {
     res.json(docs);
 });
+
+app.use("/api/v1/customer", customer);
+app.use("/api/v1/product", product);
 
 app.use("*", (req, res) => {
     res.status(StatusCodes.NOT_FOUND).json({

@@ -2,12 +2,13 @@ import { CustomErrorHandler } from "../errors";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { Request, Response, NextFunction } from "express";
 import { JsonWebTokenError } from "jsonwebtoken";
+import mongoose from "../config/mongoose";
 
 export const errorMiddleware = (
     err: any,
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
 ) => {
     console.log("err", err);
     if (err.isJoi == true) {
@@ -18,11 +19,11 @@ export const errorMiddleware = (
         });
     }
 
-    if (err instanceof JsonWebTokenError) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({
-            statusCode: StatusCodes.UNAUTHORIZED,
+    if (err instanceof mongoose.Error.CastError) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            statusCode: StatusCodes.BAD_REQUEST,
             success: false,
-            message: err.message,
+            message: `Invalid ${err.path}: ${err.value}`,
         });
     }
 

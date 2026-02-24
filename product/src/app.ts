@@ -6,6 +6,7 @@ import { host, port } from "./config/env";
 import { errorMiddleware } from "./middlewares/error";
 import { corsOptions } from "./constants/constant";
 import cors from "cors";
+import product from "./router/product";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -27,6 +28,8 @@ app.use((req, res, next) => {
     res.setHeader("Server", "secure-server");
     next();
 });
+
+app.use("/api/v1/product", product);
 
 app.use("*", (req, res) => {
     res.status(StatusCodes.NOT_FOUND).json({
