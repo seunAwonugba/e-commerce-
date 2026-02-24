@@ -7,7 +7,6 @@ export async function up(connection: Connection): Promise<void> {
         name: faker.person.fullName(),
         email: faker.internet.email().toLowerCase(),
     }));
-    console.log("fakeCustomers", fakeCustomers);
 
     const Customer = connection.model("Customer", customerSchema);
 
