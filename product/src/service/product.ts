@@ -1,3 +1,5 @@
+import { NOT_FOUND } from "../constants/constant";
+import { BadRequest } from "../errors";
 import { ProductRepository } from "../repository/product";
 
 export class ProductService {
@@ -11,6 +13,10 @@ export class ProductService {
 
     async getProduct(id: string) {
         const product = await this.productRepository.getProduct(id);
+
+        if (!product) {
+            throw new BadRequest(`Product ${NOT_FOUND.toLowerCase()}`);
+        }
 
         return product;
     }

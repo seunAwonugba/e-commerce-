@@ -1,4 +1,4 @@
-import { CUSTOMER_NOT_FOUND } from "../constants/constant";
+import { NOT_FOUND } from "../constants/constant";
 import { BadRequest } from "../errors";
 import { CustomerRepository } from "../repository/customer";
 
@@ -14,7 +14,7 @@ export class CustomerService {
     async getCustomer(id: string) {
         const customer = await this.customerRepository.getCustomer(id);
         if (!customer) {
-            throw new BadRequest(CUSTOMER_NOT_FOUND);
+            throw new BadRequest(`Customer ${NOT_FOUND.toLowerCase()}`);
         }
 
         return customer;
