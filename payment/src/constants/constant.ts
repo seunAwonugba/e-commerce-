@@ -12,3 +12,6 @@ export const AMOUNT_POSITIVE = "Amount must be greater than 0";
 export const QTY_POSITIVE = "Quantity must be greater than 0";
 export const NOT_FOUND = "Not found";
 export const PENDING = "pending";
+export const AGGREGATE_ERROR = "AggregateError";
+export const ECONNREFUSED =
+    "One or more services are down, please try again later";

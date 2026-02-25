@@ -27,15 +27,12 @@ export class Order {
 
             const completedOrders = getCompletedOrders.data.data;
 
-            console.log("completedOrders", completedOrders);
-
             const createOrderPayload = {
                 customerId: getCustomer.id,
                 productId,
                 amount: price * quantity,
                 quantity,
             };
-            console.log("createOrderPayload", createOrderPayload);
 
             const createOrder = await orderInstance.post(
                 `/`,

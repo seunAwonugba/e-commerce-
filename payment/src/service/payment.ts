@@ -1,16 +1,25 @@
 import { NOT_FOUND } from "../constants/constant";
 import { BadRequest } from "../errors";
+import { tryCatchError } from "../helper/error";
 import { IPayment, PaymentStatusFilter } from "../interface/payment";
 import { PaymentRepository } from "../repository/payment";
+import { publishMessage } from "../utils/broker";
 
 export class PaymentService {
     constructor(private paymentRepository: PaymentRepository) {}
 
     async createPayment(payment: IPayment) {
-        const createPayment =
-            await this.paymentRepository.createPayment(payment);
+        try {
+            const createPayment =
+                await this.paymentRepository.createPayment(payment);
 
-        return createPayment;
+            const publishTrx = await publishMessage("transactions", payment);
+            console.log("publishTrx", publishTrx);
+
+            return createPayment;
+        } catch (error) {
+            tryCatchError(error);
+        }
     }
 
     async getPaymentsByCustomerId(customerId: string) {

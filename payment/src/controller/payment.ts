@@ -12,13 +12,13 @@ export const createPayment = async (
     res: Response,
     next: NextFunction,
 ) => {
-    try {
+    try {        
         const schema = await paymentSchema.validateAsync(req.body);
-        const order = await paymentService.createPayment(schema);
+        const payment = await paymentService.createPayment(schema);
 
         res.status(StatusCodes.OK).json({
             success: true,
-            data: order,
+            data: payment,
         });
     } catch (error) {
         next(error);

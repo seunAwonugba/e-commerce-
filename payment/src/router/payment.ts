@@ -1,5 +1,5 @@
 import express from "express";
-import { createPayment, getPayment, getPayments } from "../controller/order";
+import { createPayment, getPayment, getPayments } from "../controller/payment";
 
 const payment = express.Router();
 

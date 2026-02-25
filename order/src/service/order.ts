@@ -10,19 +10,27 @@ export class OrderService {
 
     async createOrder(order: IOrder) {
         try {
-            const { customerId } = order;
+            const { customerId, amount, productId, quantity } = order;
             const createOrder = await this.orderRepository.createOrder(order);
+
             const paymentPayload = {
-                orderId: createOrder.id,
                 customerId,
+                productId,
+                quantity,
+                amount,
+                orderId: createOrder.id,
             };
 
             const createPayment = await paymentInstance.post(
                 `/`,
                 paymentPayload,
             );
+
             const payment = createPayment.data.data;
-            return createOrder;
+            return {
+                order: createOrder,
+                payment,
+            };
         } catch (error) {
             tryCatchError(error);
         }
