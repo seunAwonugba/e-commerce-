@@ -1,5 +1,5 @@
 import { orderInstance, productInstance } from "../axios";
-import { NOT_FOUND } from "../constants/constant";
+import { INSUFFICIENT_QUANTITY, NOT_FOUND, OUT_OF_STOCK } from "../constants/constant";
 import { BadRequest } from "../errors";
 import { tryCatchError } from "../helper/error";
 import { IOrder } from "../interface/order";
@@ -19,13 +19,17 @@ export class Order {
             }
             const getProduct = await productInstance.get(`/${productId}`);
             const product = getProduct.data.data;
+            const productQuantity = Number(product.quantity);
+
+            if (productQuantity == 0) {
+                throw new BadRequest(OUT_OF_STOCK);
+            }
+
+            if(quantity > productQuantity){
+                throw new BadRequest(INSUFFICIENT_QUANTITY)
+            }
+
             const price = product.price;
-
-            const getCompletedOrders = await orderInstance.post(`/fetch`, {
-                productId,
-            });
-
-            const completedOrders = getCompletedOrders.data.data;
 
             const createOrderPayload = {
                 customerId: getCustomer.id,

@@ -7,6 +7,7 @@ import { errorMiddleware } from "./middlewares/error";
 import payment from "./router/payment";
 import { connectRabbitMQ } from "./utils/broker";
 import { startTransactionWorker } from "./worker/transaction";
+import transaction from "./router/transaction";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/payment", payment);
+app.use("/api/v1/transaction", transaction);
 
 app.use("*", (req, res) => {
     res.status(StatusCodes.NOT_FOUND).json({
@@ -39,7 +41,7 @@ const startServer = async () => {
     try {
         await connectDb();
         await connectRabbitMQ();
-        await startTransactionWorker()
+        await startTransactionWorker();
         app.listen(port, host, () => {
             console.log(
                 `⚡️[payment-service]: Server is running at http://${host}:${port}`,

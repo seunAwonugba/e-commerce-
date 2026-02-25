@@ -9,7 +9,6 @@ export const errorMiddleware = (
     res: Response,
     next: NextFunction,
 ) => {
-    console.log("err", err);
     if (err.isJoi == true) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
             statusCode: StatusCodes.UNPROCESSABLE_ENTITY,

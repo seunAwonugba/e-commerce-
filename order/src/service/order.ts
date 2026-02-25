@@ -66,4 +66,14 @@ export class OrderService {
 
         return order;
     }
+
+    async updateOrderStatus(id: string, status: string) {
+        const order = await this.getOrder(id);
+
+        const updateOrder = await this.orderRepository.updateOrder(order.id, {
+            status,
+        });
+
+        return updateOrder;
+    }
 }

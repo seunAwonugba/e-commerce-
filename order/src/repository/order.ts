@@ -32,4 +32,17 @@ export class OrderRepository {
 
         return order;
     }
+
+    async updateOrder(id: string, payload: any) {
+        const order = await orders.findOneAndUpdate(
+            {
+                _id: id,
+            },
+            {
+                $set: payload,
+            },
+            { new: true },
+        );
+        return order;
+    }
 }

@@ -1,6 +1,6 @@
 import amqplib, { Channel } from "amqplib";
 import { rabbitMqUrl } from "../config/env";
-import { IPayment } from "../interface/payment";
+import { IPayment, IPaymentTransaction } from "../interface/payment";
 
 let connection: any;
 let channel: any;
@@ -57,14 +57,16 @@ export const assertQueue = async (queueName: string) => {
 /**
  * Publish message
  */
-export const publishMessage = async (queueName: string, message: IPayment) => {
+export const publishMessage = async (
+    queueName: string,
+    message: IPaymentTransaction,
+) => {
     const ch = getRabbitChannel();
     await ch.assertQueue(queueName, { durable: true });
 
     ch.sendToQueue(queueName, Buffer.from(JSON.stringify(message)), {
         persistent: true,
     });
-    console.log(" [x] Sent %s", message);
 };
 
 /**

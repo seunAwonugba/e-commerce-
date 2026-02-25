@@ -1,4 +1,7 @@
-import { ITransaction } from "../interface/transaction";
+import {
+    ITransaction,
+    TransactionStatusFilter,
+} from "../interface/transaction";
 import { transactions } from "../models/transaction";
 
 export class TransactionRepository {
@@ -11,6 +14,24 @@ export class TransactionRepository {
         const payment = await transactions.findById(id);
 
         return payment;
+    }
+
+    async getTransactionByOrderIdAndStatus(payload: TransactionStatusFilter) {
+        const { orderId, status } = payload;
+        const transaction = await transactions.findOne({
+            orderId,
+            status,
+        });
+
+        return transaction;
+    }
+
+    async getTransactionByOrderId(orderId: string) {
+        const transaction = await transactions.findOne({
+            orderId,
+        });
+
+        return transaction;
     }
 
     async updateTransaction(id: string, payload: any) {

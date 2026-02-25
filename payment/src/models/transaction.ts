@@ -3,12 +3,14 @@ import {
     AMOUNT_REQ,
     CUSTOMER_ID_REQ,
     ORDER_ID_REQ,
+    TRX_REF_REQ,
     PENDING,
     PRODUCT_ID_REQ,
     QTY_REQ,
+    PAYMENT_ID_REQ,
 } from "../constants/constant";
 import mongoosePaginate from "mongoose-paginate-v2";
-import { IPayment } from "../interface/payment";
+import { ITransaction } from "../interface/transaction";
 
 export const transactionSchema = new mongoose.Schema({
     customerId: {
@@ -36,6 +38,11 @@ export const transactionSchema = new mongoose.Schema({
         required: [true, ORDER_ID_REQ],
         trim: true,
     },
+    paymentId: {
+        type: String,
+        required: [true, PAYMENT_ID_REQ],
+        trim: true,
+    },
     status: {
         type: String,
         required: true,
@@ -52,6 +59,6 @@ transactionSchema.set("toJSON", { virtuals: true });
 transactionSchema.set("toObject", { virtuals: true });
 
 export const transactions = mongoose.model<
-    IPayment,
-    mongoose.PaginateModel<IPayment>
+    ITransaction,
+    mongoose.PaginateModel<ITransaction>
 >("Transaction", transactionSchema);

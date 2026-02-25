@@ -41,3 +41,26 @@ export const getProduct = async (
         next(error);
     }
 };
+
+export const decrementProductQuantity = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { id } = req.params;
+        const { quantity } = req.body;
+
+        const product = await productService.decrementProductQuantity(
+            id,
+            quantity,
+        );
+
+        res.status(StatusCodes.OK).json({
+            success: true,
+            data: product,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

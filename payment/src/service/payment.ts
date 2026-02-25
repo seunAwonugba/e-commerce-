@@ -13,8 +13,11 @@ export class PaymentService {
             const createPayment =
                 await this.paymentRepository.createPayment(payment);
 
-            const publishTrx = await publishMessage("transactions", payment);
-            console.log("publishTrx", publishTrx);
+            //publish transaction
+            await publishMessage("transactions", {
+                ...payment,
+                paymentId: createPayment.id,
+            });
 
             return createPayment;
         } catch (error) {
@@ -29,11 +32,15 @@ export class PaymentService {
         return orders;
     }
 
-    async getPaymentsByOrderId(orderId: string) {
-        const payments =
-            await this.paymentRepository.getPaymentsByOrderId(orderId);
+    async getPaymentByOrderId(orderId: string) {
+        const payment =
+            await this.paymentRepository.getPaymentByOrderId(orderId);
 
-        return payments;
+        if (!payment) {
+            throw new BadRequest(`Payment ${NOT_FOUND.toLowerCase()}`);
+        }
+
+        return payment;
     }
 
     async getPaymentsByStatusProductId(payload: PaymentStatusFilter) {
@@ -51,5 +58,18 @@ export class PaymentService {
         }
 
         return payment;
+    }
+
+    async updatePaymentStatusByOrderId(orderId: string, status: string) {
+        const payment = await this.getPaymentByOrderId(orderId);
+
+        const updatePaymentStatus = await this.paymentRepository.updatePayment(
+            payment.id,
+            {
+                status,
+            },
+        );
+
+        return updatePaymentStatus;
     }
 }

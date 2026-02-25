@@ -11,4 +11,21 @@ export class ProductRepository {
 
         return product;
     }
+
+    async decrementProductQuantity(id: string, quantity: number) {
+        const product = await products.findOneAndUpdate(
+            {
+                _id: id,
+                quantity: { $gte: quantity },
+            },
+            {
+                $inc: { quantity: -quantity },
+            },
+            {
+                new: true,
+                runValidators: true,
+            },
+        );
+        return product;
+    }
 }

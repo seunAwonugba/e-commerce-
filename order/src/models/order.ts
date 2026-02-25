@@ -34,7 +34,7 @@ export const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default: COMPLETED,
+        default: PENDING,
         trim: true,
     },
 });

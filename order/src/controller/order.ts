@@ -72,3 +72,23 @@ export const getOrder = async (
         next(error);
     }
 };
+
+export const updateOrderStatus = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const order = await orderService.updateOrderStatus(id, status);
+
+        res.status(StatusCodes.OK).json({
+            success: true,
+            data: order,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

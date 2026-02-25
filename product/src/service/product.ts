@@ -20,4 +20,13 @@ export class ProductService {
 
         return product;
     }
+
+    async decrementProductQuantity(id: string, quantity: number) {
+        const product = await this.productRepository.decrementProductQuantity(
+            id,
+            quantity,
+        );
+
+        return product;
+    }
 }

@@ -3,3 +3,7 @@ export interface IOrder {
     productId: string;
     quantity: number;
 }
+export interface IOrderPayment {
+    orderId: string;
+    amount: number;
+}

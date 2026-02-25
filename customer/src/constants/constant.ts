@@ -30,6 +30,8 @@ export const corsOptions = {
     exposedHeaders: ["X-Total-Count", "x-request-id"], // Headers that client can access
 };
 export const NAME_REQUIRED = "Name is required";
+export const ORDER_ID_REQUIRED = "Order id is required";
+export const ORDER_ID_NOT_EMPTY = "Order id cannot be empty";
 export const EMAIL_REQUIRED = "Email address is required";
 export const VALID_EMAIL = "Valid email required";
 export const EMAIL_EXIST = "Email exist";
@@ -37,3 +39,12 @@ export const AGGREGATE_ERROR = "AggregateError";
 export const ECONNREFUSED =
     "One or more services are down, please try again later";
 export const NOT_FOUND = "Not found";
+export const OUT_OF_STOCK = "Out of stock";
+export const INSUFFICIENT_QUANTITY = "Insufficient quantity";
+export const COMPLETED = "completed";
+export const INSUFFICIENT_AMOUNT = "Insufficient amount";
+export const EXCESS_AMOUNT = "Excess amount";
+export const AMOUNT_REQ = "Amount is required";
+export const AMOUNT_NOT_EMPTY = "Amount cannot be empty";
+export const AMOUNT_POSITIVE = "Amount must be greater than 0";
+export const ORDER_AND_PAYMENT_COMPLETED = "Order and Payment completed";

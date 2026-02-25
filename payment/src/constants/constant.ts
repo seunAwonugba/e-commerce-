@@ -1,11 +1,14 @@
 export const CUSTOMER_ID_REQ = "Customer id is required";
 export const ORDER_ID_REQ = "Order id is required";
+export const PAYMENT_ID_REQ = "Payment id is required";
 export const PRODUCT_ID_REQ = "Product id is required";
 export const AMOUNT_REQ = "Amount is required";
 export const CUSTOMER_ID_NOT_EMPTY = "Customer id cannot be empty";
 export const ORDER_ID_NOT_EMPTY = "Order id cannot be empty";
 export const QTY_REQ = "Quantity is required";
 export const QTY_NOT_EMPTY = "Quantity cannot be empty";
+export const TRX_REF_REQ = "Transaction reference is required";
+export const TRX_REF_NOT_EMPTY = "Transaction reference cannot be empty";
 export const PRODUCT_ID_NOT_EMPTY = "Product id cannot be empty";
 export const AMOUNT_NOT_EMPTY = "Amount cannot be empty";
 export const AMOUNT_POSITIVE = "Amount must be greater than 0";

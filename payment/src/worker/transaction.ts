@@ -6,6 +6,7 @@ export const startTransactionWorker = async () => {
     console.log("📥 Transaction worker started...");
 
     await consumeMessages("transactions", async (data) => {
-        await transactionRepository.createTransaction(data);
+        const createTransaction =
+            await transactionRepository.createTransaction(data);
     });
 };

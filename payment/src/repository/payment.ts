@@ -12,8 +12,8 @@ export class PaymentRepository {
         });
         return getPayments;
     }
-    async getPaymentsByOrderId(orderId: string) {
-        const getPayments = await payments.find({
+    async getPaymentByOrderId(orderId: string) {
+        const getPayments = await payments.findOne({
             orderId,
         });
         return getPayments;
@@ -31,5 +31,18 @@ export class PaymentRepository {
         const payment = await payments.findById(id);
 
         return payment;
+    }
+
+    async updatePayment(id: string, payload: any) {
+        const vendor = await payments.findOneAndUpdate(
+            {
+                _id: id,
+            },
+            {
+                $set: payload,
+            },
+            { new: true },
+        );
+        return vendor;
     }
 }

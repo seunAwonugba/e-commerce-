@@ -12,7 +12,7 @@ export interface ITransaction extends mongoose.Document {
 
 export type Status = "pending" | "completed" | "failed" | "cancelled";
 
-// export interface PaymentStatusFilter {
-//     orderId: string;
-//     status: Status;
-// }
+export interface TransactionStatusFilter {
+    orderId: string;
+    status: Status;
+}

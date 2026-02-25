@@ -12,7 +12,7 @@ export const createPayment = async (
     res: Response,
     next: NextFunction,
 ) => {
-    try {        
+    try {
         const schema = await paymentSchema.validateAsync(req.body);
         const payment = await paymentService.createPayment(schema);
 
@@ -43,7 +43,7 @@ export const getPayments = async (
         if (customerId) {
             payments = await paymentService.getPaymentsByCustomerId(customerId);
         } else if (orderId) {
-            payments = await paymentService.getPaymentsByOrderId(orderId);
+            payments = await paymentService.getPaymentByOrderId(orderId);
         }
 
         res.status(StatusCodes.OK).json({
@@ -64,6 +64,28 @@ export const getPayment = async (
         const { id } = req.params;
 
         const payment = await paymentService.getPayment(id);
+
+        res.status(StatusCodes.OK).json({
+            success: true,
+            data: payment,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updatePaymentStatusByOrderId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { status, orderId } = req.body;
+
+        const payment = await paymentService.updatePaymentStatusByOrderId(
+            orderId,
+            status,
+        );
 
         res.status(StatusCodes.OK).json({
             success: true,
