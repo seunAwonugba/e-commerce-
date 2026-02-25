@@ -38,12 +38,14 @@ export const orderSchema = new mongoose.Schema({
     },
 });
 
+orderSchema.set("timestamps", true);
+
 orderSchema.plugin(mongoosePaginate);
 
 orderSchema.set("toJSON", { virtuals: true });
 orderSchema.set("toObject", { virtuals: true });
 
 export const orders = mongoose.model<IOrder, mongoose.PaginateModel<IOrder>>(
-    "Invoice",
+    "Order",
     orderSchema,
 );

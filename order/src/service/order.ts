@@ -1,5 +1,7 @@
+import { paymentInstance } from "../axios";
 import { NOT_FOUND } from "../constants/constant";
 import { BadRequest } from "../errors";
+import { tryCatchError } from "../helper/error";
 import { IOrder, OrderStatusProductFilter } from "../interface/order";
 import { OrderRepository } from "../repository/order";
 
@@ -7,9 +9,23 @@ export class OrderService {
     constructor(private orderRepository: OrderRepository) {}
 
     async createOrder(order: IOrder) {
-        const orders = await this.orderRepository.createOrder(order);
+        try {
+            const { customerId } = order;
+            const createOrder = await this.orderRepository.createOrder(order);
+            const paymentPayload = {
+                orderId: createOrder.id,
+                customerId,
+            };
 
-        return orders;
+            const createPayment = await paymentInstance.post(
+                `/`,
+                paymentPayload,
+            );
+            const payment = createPayment.data.data;
+            return createOrder;
+        } catch (error) {
+            tryCatchError(error);
+        }
     }
 
     async getOrdersByCustomerId(customerId: string) {
