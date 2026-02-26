@@ -1,0 +1,46 @@
+services:
+    customer:
+        build:
+            context: ./customer
+            dockerfile: Dockerfile.localhost
+            args:
+                NODE_ENV: development
+        ports:
+            - "8000:8000"
+        env_file:
+            - ./customer/.env
+        command: ["npm", "run", "dev"]
+    order:
+        build:
+            context: ./order
+            dockerfile: Dockerfile.localhost
+            args:
+                NODE_ENV: development
+        ports:
+            - "8001:8001"
+        env_file:
+            - ./order/.env
+        command: ["npm", "run", "dev"]
+
+    payment:
+        build:
+            context: ./payment
+            dockerfile: Dockerfile.localhost
+            args:
+                NODE_ENV: development
+        ports:
+            - "8002:8002"
+        env_file:
+            - ./payment/.env
+        command: ["npm", "run", "dev"]
+    product:
+        build:
+            context: ./product
+            dockerfile: Dockerfile.localhost
+            args:
+                NODE_ENV: development
+        ports:
+            - "8003:8003"
+        env_file:
+            - ./product/.env
+        command: ["npm", "run", "dev"]

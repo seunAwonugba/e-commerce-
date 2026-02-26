@@ -2,7 +2,7 @@ dist
 node_modules
 .dockerignore
 .gitignore
-Dockerfile
+Dockerfile.localhost
 README.md
 .git
 
