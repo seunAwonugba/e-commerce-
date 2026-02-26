@@ -34,6 +34,22 @@ export class TransactionRepository {
         return transaction;
     }
 
+    async getTransactionsByCustomerId(customerId: string) {
+        const transaction = await transactions.find({
+            customerId,
+        });
+
+        return transaction;
+    }
+
+    async getTransactionsByProductId(productId: string) {
+        const transaction = await transactions.find({
+            productId,
+        });
+
+        return transaction;
+    }
+
     async updateTransaction(id: string, payload: any) {
         const invoice = await transactions.findOneAndUpdate(
             {

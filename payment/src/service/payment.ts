@@ -26,10 +26,17 @@ export class PaymentService {
     }
 
     async getPaymentsByCustomerId(customerId: string) {
-        const orders =
+        const products =
             await this.paymentRepository.getPaymentsByCustomerId(customerId);
 
-        return orders;
+        return products;
+    }
+
+    async getPaymentsByProductId(productId: string) {
+        const products =
+            await this.paymentRepository.getPaymentsByProductId(productId);
+
+        return products;
     }
 
     async getPaymentByOrderId(orderId: string) {

@@ -1,0 +1,492 @@
+openapi: 3.0.0
+info:
+    title: e-commerce api
+    contact:
+        email: "seunawonugba@gmail.com"
+    version: "1.0"
+servers:
+    - url: http://localhost:{port}/api/v1
+      variables:
+          port:
+              enum:
+                  - "8000"
+              default: "8000"
+paths:
+    /customer:
+        get:
+            tags:
+                - Customer
+            description: get customers
+            operationId: get_customers
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/customer-list-data-response"
+    /customer/{id}:
+        get:
+            tags:
+                - Customer
+            description: get customer
+            operationId: get_customer
+            parameters:
+                - in: path
+                  name: id
+                  description: customer id
+                  schema:
+                      type: string
+                  required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/customer-data-response"
+    /product:
+        get:
+            tags:
+                - Product
+            description: get products
+            operationId: get_products
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/product-list-data-response"
+    /product/{id}:
+        get:
+            tags:
+                - Product
+            description: get product
+            operationId: get_product
+            parameters:
+                - in: path
+                  name: id
+                  description: product id
+                  schema:
+                      type: string
+                  required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/product-data-response"
+    /order:
+        post:
+            tags:
+                - Order
+            description: create orders
+            operationId: create_orders
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/order-request"
+                required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/order-response"
+    /order/payment:
+        post:
+            tags:
+                - Order
+            description: complete/pay for order
+            operationId: pay_order
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/pay-order-request"
+                required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/pay-order-response"
+    /order/fetch:
+        post:
+            tags:
+                - Order
+            description: get orders
+            operationId: get_orders
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            oneOf:
+                                - $ref: "#/components/schemas/customer-id-request"
+                                - $ref: "#/components/schemas/product-id-request"
+                required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/order-list-data-response"
+    /order/{id}:
+        get:
+            tags:
+                - Order
+            description: get order
+            operationId: get_order
+            parameters:
+                - in: path
+                  name: id
+                  description: product id
+                  schema:
+                      type: string
+                  required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/order-data-response"
+    /transaction:
+        post:
+            tags:
+                - Transaction
+            description: get transactions
+            operationId: get_transactions
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            oneOf:
+                                - $ref: "#/components/schemas/customer-id-request"
+                                - $ref: "#/components/schemas/product-id-request"
+                required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/transaction-list-data-response"
+    /transaction/{id}:
+        get:
+            tags:
+                - Transaction
+            description: get transaction
+            operationId: get_transaction
+            parameters:
+                - in: path
+                  name: id
+                  description: transaction id
+                  schema:
+                      type: string
+                  required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/transaction-data-response"
+    /payment:
+        post:
+            tags:
+                - Payment
+            description: get payments
+            operationId: get_payments
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            oneOf:
+                                - $ref: "#/components/schemas/customer-id-request"
+                                - $ref: "#/components/schemas/product-id-request"
+                required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/payment-list-data-response"
+    /payment/{id}:
+        get:
+            tags:
+                - Payment
+            description: get payment
+            operationId: get_payment
+            parameters:
+                - in: path
+                  name: id
+                  description: payment id
+                  schema:
+                      type: string
+                  required: true
+            responses:
+                "200":
+                    description: ok
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/payment-data-response"
+components:
+    schemas:
+        customer-list-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/customer-response"
+        transaction-list-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/transaction"
+        payment-list-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/payment-response"
+        order-list-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/order"
+        customer-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    $ref: "#/components/schemas/customer-response"
+        transaction-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    $ref: "#/components/schemas/transaction"
+        payment-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    $ref: "#/components/schemas/payment-response"
+        order-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    $ref: "#/components/schemas/order"
+
+        customer-response:
+            type: object
+            properties:
+                _id:
+                    type: string
+                name:
+                    type: string
+                email:
+                    type: string
+                __v:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+        payment-response:
+            type: object
+            properties:
+                _id:
+                    type: string
+                customerId:
+                    type: string
+                productId:
+                    type: string
+                quantity:
+                    type: string
+                amount:
+                    type: string
+                orderId:
+                    type: string
+                status:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                __v:
+                    type: string
+                id:
+                    type: string
+        product-list-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/customer-response"
+        order-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: object
+                    properties:
+                        order:
+                            $ref: "#/components/schemas/order"
+                        payment:
+                            $ref: "#/components/schemas/payment-response"
+        pay-order-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    type: object
+                    properties:
+                        order:
+                            $ref: "#/components/schemas/order"
+                        transaction:
+                            $ref: "#/components/schemas/transaction"
+                        product:
+                            $ref: "#/components/schemas/product-response"
+                        payment:
+                            $ref: "#/components/schemas/payment-response"
+
+        product-data-response:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                data:
+                    $ref: "#/components/schemas/product-response"
+
+        product-response:
+            type: object
+            properties:
+                _id:
+                    type: string
+                name:
+                    type: string
+                price:
+                    type: string
+                quantity:
+                    type: string
+                __v:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+        order:
+            type: object
+            properties:
+                customerId:
+                    type: string
+                productId:
+                    type: string
+                amount:
+                    type: string
+                quantity:
+                    type: string
+                status:
+                    type: string
+                _id:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                __v:
+                    type: string
+                id:
+                    type: string
+        transaction:
+            type: object
+            properties:
+                _id:
+                    type: string
+                customerId:
+                    type: string
+                productId:
+                    type: string
+                quantity:
+                    type: string
+                amount:
+                    type: string
+                orderId:
+                    type: string
+                paymentId:
+                    type: string
+                status:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                __v:
+                    type: string
+                id:
+                    type: string
+        order-request:
+            type: object
+            properties:
+                customerId:
+                    type: string
+                productId:
+                    type: string
+                quantity:
+                    type: integer
+        customer-id-request:
+            type: object
+            properties:
+                customerId:
+                    type: string
+        pay-order-request:
+            type: object
+            properties:
+                orderId:
+                    type: string
+                amount:
+                    type: integer
+        product-id-request:
+            type: object
+            properties:
+                customerId:
+                    type: string
+    securitySchemes:
+        bearer:
+            type: http
+            scheme: bearer
+security: []

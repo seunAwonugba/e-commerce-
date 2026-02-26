@@ -12,6 +12,8 @@ import cors from "cors";
 import customer from "./router/customer";
 import product from "./router/product";
 import order from "./router/order";
+import payment from "./router/payment";
+import transaction from "./router/transaction";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -43,6 +45,8 @@ app.get("/api/v1/docs-json", (req, res) => {
 app.use("/api/v1/customer", customer);
 app.use("/api/v1/product", product);
 app.use("/api/v1/order", order);
+app.use("/api/v1/payment", payment);
+app.use("/api/v1/transaction", transaction);
 
 app.use("*", (req, res) => {
     res.status(StatusCodes.NOT_FOUND).json({

@@ -12,6 +12,12 @@ export class PaymentRepository {
         });
         return getPayments;
     }
+    async getPaymentsByProductId(productId: string) {
+        const getPayments = await payments.find({
+            productId,
+        });
+        return getPayments;
+    }
     async getPaymentByOrderId(orderId: string) {
         const getPayments = await payments.findOne({
             orderId,

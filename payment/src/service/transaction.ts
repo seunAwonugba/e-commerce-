@@ -40,6 +40,24 @@ export class TransactionService {
         return transaction;
     }
 
+    async getTransactionsByCustomerId(customerId: string) {
+        const transaction =
+            await this.transactionRepository.getTransactionsByCustomerId(
+                customerId,
+            );
+
+        return transaction;
+    }
+
+    async getTransactionsByProductId(productId: string) {
+        const transaction =
+            await this.transactionRepository.getTransactionsByProductId(
+                productId,
+            );
+
+        return transaction;
+    }
+
     async updateTransactionStatusByOrderId(orderId: string, status: string) {
         const transaction = await this.getTransactionByOrderId(orderId);
 

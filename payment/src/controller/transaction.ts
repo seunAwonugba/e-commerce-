@@ -31,7 +31,7 @@ export const getTransactions = async (
     next: NextFunction,
 ) => {
     try {
-        const { orderId, status } = req.body;
+        const { orderId, status, customerId, productId } = req.body;
 
         let transactions;
         if (orderId && status) {
@@ -43,6 +43,14 @@ export const getTransactions = async (
                 await transactionService.getTransactionByOrderIdAndStatus(
                     payload,
                 );
+        } else if (customerId) {
+            transactions =
+                await transactionService.getTransactionsByCustomerId(
+                    customerId,
+                );
+        } else if (productId) {
+            transactions =
+                await transactionService.getTransactionsByProductId(productId);
         }
 
         res.status(StatusCodes.OK).json({
