@@ -9,7 +9,8 @@
         "prestart": "npm run build",
         "db:migrate": "cd src && npx migrate up",
         "start": "cross-env NODE_ENV=production node dist/app.js",
-        "dev": "cross-env NODE_ENV=development concurrently \"npx tsc -w\" \"nodemon dist/app.js\""
+        "dev": "cross-env NODE_ENV=development concurrently \"npx tsc -w\" \"nodemon dist/app.js\"",
+        "test": "jest"
     },
     "author": "seun awonugba",
     "license": "ISC",
@@ -52,11 +53,17 @@
         "@types/cors": "^2.8.17",
         "@types/express": "^4.17.21",
         "@types/express-session": "^1.18.0",
+        "@types/jest": "^30.0.0",
         "@types/jsonwebtoken": "^9.0.7",
+        "@types/supertest": "^7.2.0",
         "@types/swagger-jsdoc": "^6.0.4",
         "@types/swagger-ui-express": "^4.1.6",
         "@types/yamljs": "^0.2.34",
         "concurrently": "^9.0.1",
+        "jest": "^30.2.0",
+        "supertest": "^7.2.2",
+        "ts-jest": "^29.4.6",
+        "ts-node": "^10.9.2",
         "typescript": "^5.6.2"
     }
 }
