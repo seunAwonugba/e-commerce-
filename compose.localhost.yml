@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
     customer:
         build:
@@ -8,8 +10,9 @@ services:
         ports:
             - "8000:8000"
         env_file:
-            - ./customer/.env
+            - ./.env
         command: ["npm", "run", "dev"]
+
     order:
         build:
             context: ./order
@@ -19,7 +22,7 @@ services:
         ports:
             - "8001:8001"
         env_file:
-            - ./order/.env
+            - ./.env
         command: ["npm", "run", "dev"]
 
     payment:
@@ -31,8 +34,9 @@ services:
         ports:
             - "8002:8002"
         env_file:
-            - ./payment/.env
+            - ./.env
         command: ["npm", "run", "dev"]
+
     product:
         build:
             context: ./product
@@ -42,5 +46,5 @@ services:
         ports:
             - "8003:8003"
         env_file:
-            - ./product/.env
+            - ./.env
         command: ["npm", "run", "dev"]
